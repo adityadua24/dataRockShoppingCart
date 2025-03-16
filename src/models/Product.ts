@@ -3,9 +3,6 @@ export type ProductSKU = "ipd" | "mbp" | "atv" | "vga";
 
 /**
  * Represents a product in our store's inventory
- *
- * Note: Price is stored in dollars (not cents) to match the business requirements
- * and make it easier to work with the given test cases
  */
 export class Product {
   constructor(public readonly sku: ProductSKU, public readonly name: string, private _price: number) {
@@ -22,7 +19,6 @@ export class Product {
     }
   }
 
-  // Use getter to prevent direct price manipulation
   get price(): number {
     // Round to 2 decimal places to handle floating point precision issues
     return Math.round(this._price * 100) / 100;
@@ -57,7 +53,6 @@ export class ProductCatalog {
   }
 
   /**
-   * Creates our store's initial product lineup
    * These are the products we're launching with - more can be added later
    */
   static createDefault(): ProductCatalog {
@@ -66,9 +61,9 @@ export class ProductCatalog {
     // Our launch day product lineup
     const launchProducts = [
       new Product("ipd", "Super iPad", 549.99),
-      new Product("mbp", "MacBook Pro", 1399.99), // High-end laptop
-      new Product("atv", "Apple TV", 109.5), // Media streaming device
-      new Product("vga", "VGA adapter", 30.0), // For legacy connections
+      new Product("mbp", "MacBook Pro", 1399.99),
+      new Product("atv", "Apple TV", 109.5),
+      new Product("vga", "VGA adapter", 30.0),
     ];
 
     launchProducts.forEach((product) => {

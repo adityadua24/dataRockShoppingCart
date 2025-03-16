@@ -12,6 +12,21 @@ describe("Product", () => {
     expect(laptop.name).toBe("Gaming Laptop");
     expect(laptop.price).toBe(999.99);
   });
+
+  it("throws helpful errors for invalid products", () => {
+    // Empty name
+    expect(() => mockProduct("test", "", 10.0)).toThrow("Hey, products need actual names!");
+
+    // Negative price
+    expect(() => mockProduct("test", "Test Product", -10.0)).toThrow(
+      "Come on, Test Product can't be free or negative priced!"
+    );
+  });
+
+  it("handles floating point price precision correctly", () => {
+    const product = mockProduct("test", "Test", 10.999);
+    expect(product.price).toBe(11.0); // Should round to 2 decimal places
+  });
 });
 
 describe("Product Catalog", () => {
@@ -35,7 +50,7 @@ describe("Product Catalog", () => {
     const product2 = mockProduct("test", "Duplicate", 20.0);
 
     catalog.addProduct(product1);
-    expect(() => catalog.addProduct(product2)).toThrow("Oops! We already have a Original (SKU: test) in the catalog");
+    expect(() => catalog.addProduct(product2)).toThrow(`Oops! We already have a Duplicate (SKU: test) in the catalog`);
   });
 
   describe("default catalog", () => {
